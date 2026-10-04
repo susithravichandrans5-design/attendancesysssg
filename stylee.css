@@ -1,0 +1,519 @@
+/* ==========================================================================
+   Chronos Roster — Standalone Attendance System Stylesheet (style.css)
+   Architecture: CSS Custom Properties, Flexbox, CSS Grid, Tabular Numerals
+   ========================================================================== */
+
+:root {
+  /* 60-30-10 Color System */
+  --bg-canvas: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-subtle: #F1F5F9;
+  --border-hairline: #E2E8F0;
+  --border-focus: #0F172A;
+
+  /* Typography Colors */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+
+  /* Semantic Status Colors (Paired with explicit text labels) */
+  --status-present: #16A34A;
+  --status-present-bg: #F0FDF4;
+  --status-present-border: #BBF7D0;
+
+  --status-late: #D97706;
+  --status-late-bg: #FFFBEB;
+  --status-late-border: #FDE68A;
+
+  --status-absent: #DC2626;
+  --status-absent-bg: #FEF2F2;
+  --status-absent-border: #FECACA;
+
+  /* Font Stacks */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--bg-canvas);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tabular Numerals Discipline */
+.mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+}
+
+/* 1. Top Navigation Bar (Strict 3-Zone Contract) */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 0 24px;
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.brand-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 18px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 150ms ease, border-color 150ms ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--text-primary);
+}
+
+.nav-link.active {
+  border-bottom-color: var(--text-primary);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.btn-primary {
+  background-color: var(--text-primary);
+  color: #FFFFFF;
+  border: 1px solid var(--text-primary);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-hairline);
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg-subtle);
+}
+
+/* 2. Workspace Layout */
+.workspace {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - 60px);
+}
+
+/* Left Sidebar */
+.sidebar {
+  background-color: var(--bg-surface);
+  border-right: 1px solid var(--border-hairline);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.sidebar-heading {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.session-meta {
+  padding: 12px;
+  background-color: var(--bg-canvas);
+  border: 1px solid var(--border-hairline);
+  border-radius: 6px;
+}
+
+.session-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.session-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.dept-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dept-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.dept-item:hover,
+.dept-item.active {
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.threshold-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.threshold-row {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-secondary);
+}
+
+.progress-track {
+  height: 6px;
+  background-color: var(--bg-subtle);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--status-present);
+}
+
+/* 3. Main Content Area */
+.main-content {
+  padding: 28px 32px;
+  max-width: 1280px;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.breadcrumb {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.date-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.date-input,
+.select-input {
+  height: 38px;
+  padding: 0 12px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 6px;
+}
+
+/* 4. KPI Strip (Single Elevation, Hairline Grid) */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.kpi-cell {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-right: 1px solid var(--border-hairline);
+}
+
+.kpi-cell:last-child {
+  border-right: none;
+}
+
+.kpi-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.kpi-value {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.kpi-meta {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.status-text-present { color: var(--status-present); }
+.status-text-late    { color: var(--status-late); }
+.status-text-absent  { color: var(--status-absent); }
+
+/* 5. Toolbar & Segmented Controls */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.search-input {
+  width: 300px;
+  height: 38px;
+  padding: 0 12px;
+  font-family: inherit;
+  font-size: 13px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 6px;
+}
+
+.segmented-control {
+  display: inline-flex;
+  padding: 3px;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-hairline);
+  border-radius: 7px;
+}
+
+.seg-btn {
+  padding: 5px 12px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.seg-btn.active {
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+/* 6. High-Density Roster Table */
+.table-container {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.roster-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.roster-table th {
+  padding: 12px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background-color: var(--bg-canvas);
+  border-bottom: 1px solid var(--border-hairline);
+  white-space: nowrap;
+}
+
+.roster-table td {
+  padding: 12px 16px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border-hairline);
+  vertical-align: middle;
+}
+
+.roster-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.roster-table tbody tr:hover {
+  background-color: var(--bg-canvas);
+}
+
+.num-col {
+  text-align: right;
+}
+
+.text-muted {
+  color: var(--text-secondary);
+}
+
+/* Member Identity Cell */
+.member-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-hairline);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.member-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.member-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Pure CSS Interactive Status Radio Toggles */
+.status-radios {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.radio-label {
+  position: relative;
+  cursor: pointer;
+}
+
+.radio-label input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radio-label span {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border-hairline);
+  border-radius: 5px;
+  color: var(--text-secondary);
+  background-color: var(--bg-surface);
+  transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+  white-space: nowrap;
+}
+
+.radio-label.present input:checked + span {
+  background-color: var(--status-present-bg);
+  color: var(--status-present);
+  border-color: var(--status-present-border);
+}
+
+.radio-label.late input:checked + span {
+  background-color: var(--status-late-bg);
+  color: var(--status-late);
+  border-color: var(--status-late-border);
+}
+
+.radio-label.absent input:checked + span {
+  background-color: var(--status-absent-bg);
+  color: var(--status-absent);
+  border-color: var(--status-absent-border);
+}
+
+.radio-label input:focus-visible + span {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 1px;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--border-hairline);
+  }
+  .kpi-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

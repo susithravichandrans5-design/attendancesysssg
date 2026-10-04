@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chronos Roster — Attendance Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Top Bar Contract: Brand | Nav Links | Primary Actions -->
+  <header class="topbar">
+    <a href="#" class="brand-title">Chronos Roster</a>
+
+    <nav class="main-nav" aria-label="Primary Navigation">
+      <a href="#daily-roster" class="nav-link active">Daily Roster</a>
+      <a href="#departments" class="nav-link">Departments</a>
+      <a href="#timesheets" class="nav-link">Timesheets</a>
+      <a href="#analytics" class="nav-link">Summary</a>
+    </nav>
+
+    <div class="header-actions">
+      <button type="button" class="btn btn-secondary">Export CSV</button>
+      <button type="button" class="btn btn-primary">+ Log Entry</button>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <!-- Left Sidebar: Contextual Filters & Shift Summary -->
+    <aside class="sidebar">
+      <div class="sidebar-group">
+        <h2 class="sidebar-heading">Active Session</h2>
+        <div class="session-meta">
+          <p class="session-title">Morning Shift A</p>
+          <p class="session-sub">Oct 04, 2026 · 08:00 – 17:00</p>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <h2 class="sidebar-heading">Departments</h2>
+        <ul class="dept-list">
+          <li><a href="#all" class="dept-item active"><span>All Departments</span><span class="mono-num">42</span></a></li>
+          <li><a href="#eng" class="dept-item"><span>Core Engineering</span><span class="mono-num">18</span></a></li>
+          <li><a href="#ops" class="dept-item"><span>Field Operations</span><span class="mono-num">12</span></a></li>
+          <li><a href="#design" class="dept-item"><span>Product Design</span><span class="mono-num">7</span></a></li>
+          <li><a href="#qa" class="dept-item"><span>Quality Assurance</span><span class="mono-num">5</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <h2 class="sidebar-heading">Attendance Threshold</h2>
+        <div class="threshold-box">
+          <div class="threshold-row">
+            <span>On-Time Target</span>
+            <span class="mono-num">95.0%</span>
+          </div>
+          <div class="threshold-row">
+            <span>Current Rate</span>
+            <span class="mono-num status-text-present">92.8%</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-valuenow="93" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill" style="width: 92.8%"></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Viewport -->
+    <main class="main-content">
+      <!-- Page Header & Date Controls -->
+      <section class="page-header">
+        <div>
+          <p class="breadcrumb">Operations · Munich Facility · Shift Roster</p>
+          <h1 class="page-title">Daily Attendance Log</h1>
+        </div>
+        <div class="date-controls">
+          <input type="date" class="date-input mono-num" value="2026-10-04" aria-label="Select Attendance Date" />
+          <select class="select-input" aria-label="Select Shift">
+            <option value="morning">Morning Shift (08:00)</option>
+            <option value="swing">Swing Shift (16:00)</option>
+            <option value="night">Night Shift (00:00)</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Structured KPI Strip (Single-Elevation, Hairline Divided) -->
+      <section class="kpi-strip" aria-label="Attendance Summary Metrics">
+        <div class="kpi-cell">
+          <span class="kpi-label">Total Enrolled</span>
+          <strong class="kpi-value mono-num">42</strong>
+          <span class="kpi-meta">4 Departments · Active</span>
+        </div>
+        <div class="kpi-cell">
+          <span class="kpi-label">Present On-Time</span>
+          <strong class="kpi-value mono-num status-text-present">35</strong>
+          <span class="kpi-meta">83.3% of total roster</span>
+        </div>
+        <div class="kpi-cell">
+          <span class="kpi-label">Late Arrivals</span>
+          <strong class="kpi-value mono-num status-text-late">4</strong>
+          <span class="kpi-meta">Avg delay +14 mins</span>
+        </div>
+        <div class="kpi-cell">
+          <span class="kpi-label">Absent / On Leave</span>
+          <strong class="kpi-value mono-num status-text-absent">3</strong>
+          <span class="kpi-meta">2 Excused · 1 Unplanned</span>
+        </div>
+      </section>
+
+      <!-- Filter & Search Bar -->
+      <section class="toolbar" aria-label="Filter Roster">
+        <div class="search-wrapper">
+          <input
+            type="search"
+            class="search-input"
+            placeholder="Search by name, ID, or role..."
+            aria-label="Search roster"
+          />
+        </div>
+
+        <div class="segmented-control" role="group" aria-label="Filter by attendance status">
+          <button type="button" class="seg-btn active">All (42)</button>
+          <button type="button" class="seg-btn">Present (35)</button>
+          <button type="button" class="seg-btn">Late (4)</button>
+          <button type="button" class="seg-btn">Absent (3)</button>
+        </div>
+      </section>
+
+      <!-- High-Density Attendance Roster Table -->
+      <div class="table-container">
+        <table class="roster-table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Member</th>
+              <th scope="col">Department · Role</th>
+              <th scope="col" class="num-col">Check-In</th>
+              <th scope="col" class="num-col">Check-Out</th>
+              <th scope="col" class="num-col">Hours</th>
+              <th scope="col">Mark Status</th>
+              <th scope="col">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Row 1 -->
+            <tr>
+              <td class="mono-num text-muted">EMP-1042</td>
+              <td>
+                <div class="member-cell">
+                  <span class="avatar">KL</span>
+                  <div>
+                    <div class="member-name">Klara Lindqvist</div>
+                    <div class="member-sub">klara.l@chronos.io</div>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted">Core Engineering · Principal Architect</td>
+              <td class="mono-num num-col">08:48</td>
+              <td class="mono-num num-col">17:15</td>
+              <td class="mono-num num-col">08h 27m</td>
+              <td>
+                <div class="status-radios" role="radiogroup" aria-label="Attendance status for Klara Lindqvist">
+                  <label class="radio-label present">
+                    <input type="radio" name="att-1042" value="present" checked />
+                    <span>Present</span>
+                  </label>
+                  <label class="radio-label late">
+                    <input type="radio" name="att-1042" value="late" />
+                    <span>Late</span>
+                  </label>
+                  <label class="radio-label absent">
+                    <input type="radio" name="att-1042" value="absent" />
+                    <span>Absent</span>
+                  </label>
+                </div>
+              </td>
+              <td class="text-muted">Verified via Gate B</td>
+            </tr>
+
+            <!-- Row 2 -->
+            <tr>
+              <td class="mono-num text-muted">EMP-1048</td>
+              <td>
+                <div class="member-cell">
+                  <span class="avatar">MV</span>
+                  <div>
+                    <div class="member-name">Marcus Vance</div>
+                    <div class="member-sub">m.vance@chronos.io</div>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted">Field Operations · Site Lead</td>
+              <td class="mono-num num-col status-text-late">09:19</td>
+              <td class="mono-num num-col">17:40</td>
+              <td class="mono-num num-col">08h 21m</td>
+              <td>
+                <div class="status-radios" role="radiogroup" aria-label="Attendance status for Marcus Vance">
+                  <label class="radio-label present">
+                    <input type="radio" name="att-1048" value="present" />
+                    <span>Present</span>
+                  </label>
+                  <label class="radio-label late">
+                    <input type="radio" name="att-1048" value="late" checked />
+                    <span>Late</span>
+                  </label>
+                  <label class="radio-label absent">
+                    <input type="radio" name="att-1048" value="absent" />
+                    <span>Absent</span>
+                  </label>
+                </div>
+              </td>
+              <td class="text-muted">Transit delay · S-Bahn line</td>
+            </tr>
+
+            <!-- Row 3 -->
+            <tr>
+              <td class="mono-num text-muted">EMP-1051</td>
+              <td>
+                <div class="member-cell">
+                  <span class="avatar">SR</span>
+                  <div>
+                    <div class="member-name">Sora Takahashi</div>
+                    <div class="member-sub">sora.t@chronos.io</div>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted">Product Design · Staff Designer</td>
+              <td class="mono-num num-col">08:55</td>
+              <td class="mono-num num-col">17:05</td>
+              <td class="mono-num num-col">08h 10m</td>
+              <td>
+                <div class="status-radios" role="radiogroup" aria-label="Attendance status for Sora Takahashi">
+                  <label class="radio-label present">
+                    <input type="radio" name="att-1051" value="present" checked />
+                    <span>Present</span>
+                  </label>
+                  <label class="radio-label late">
+                    <input type="radio" name="att-1051" value="late" />
+                    <span>Late</span>
+                  </label>
+                  <label class="radio-label absent">
+                    <input type="radio" name="att-1051" value="absent" />
+                    <span>Absent</span>
+                  </label>
+                </div>
+              </td>
+              <td class="text-muted">Studio Desk 14</td>
+            </tr>
+
+            <!-- Row 4 -->
+            <tr>
+              <td class="mono-num text-muted">EMP-1059</td>
+              <td>
+                <div class="member-cell">
+                  <span class="avatar">DN</span>
+                  <div>
+                    <div class="member-name">David Ndiaye</div>
+                    <div class="member-sub">d.ndiaye@chronos.io</div>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted">Quality Assurance · Test Engineer</td>
+              <td class="mono-num num-col text-muted">--:--</td>
+              <td class="mono-num num-col text-muted">--:--</td>
+              <td class="mono-num num-col text-muted">00h 00m</td>
+              <td>
+                <div class="status-radios" role="radiogroup" aria-label="Attendance status for David Ndiaye">
+                  <label class="radio-label present">
+                    <input type="radio" name="att-1059" value="present" />
+                    <span>Present</span>
+                  </label>
+                  <label class="radio-label late">
+                    <input type="radio" name="att-1059" value="late" />
+                    <span>Late</span>
+                  </label>
+                  <label class="radio-label absent">
+                    <input type="radio" name="att-1059" value="absent" checked />
+                    <span>Absent</span>
+                  </label>
+                </div>
+              </td>
+              <td class="text-muted">Approved medical leave</td>
+            </tr>
+
+            <!-- Row 5 -->
+            <tr>
+              <td class="mono-num text-muted">EMP-1064</td>
+              <td>
+                <div class="member-cell">
+                  <span class="avatar">ER</span>
+                  <div>
+                    <div class="member-name">Elena Rostova</div>
+                    <div class="member-sub">e.rostova@chronos.io</div>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted">Core Engineering · Systems Developer</td>
+              <td class="mono-num num-col">08:42</td>
+              <td class="mono-num num-col">17:12</td>
+              <td class="mono-num num-col">08h 30m</td>
+              <td>
+                <div class="status-radios" role="radiogroup" aria-label="Attendance status for Elena Rostova">
+                  <label class="radio-label present">
+                    <input type="radio" name="att-1064" value="present" checked />
+                    <span>Present</span>
+                  </label>
+                  <label class="radio-label late">
+                    <input type="radio" name="att-1064" value="late" />
+                    <span>Late</span>
+                  </label>
+                  <label class="radio-label absent">
+                    <input type="radio" name="att-1064" value="absent" />
+                    <span>Absent</span>
+                  </label>
+                </div>
+              </td>
+              <td class="text-muted">Verified via Gate A</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
